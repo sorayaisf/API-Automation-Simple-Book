@@ -8,13 +8,14 @@ Ensure you have the following software installed:
 - npm (comes with Node.js)
 - Newman (Postman's command-line runner)
 
-## 1. Clone the Repository
+``1. Clone the Repository``
 
 First, clone this repository to your local machine:
 
 ``bash
 git clone <repository-url>
 cd <repository-directory>
+``
 
 ## 2. Install Dependencies
 
