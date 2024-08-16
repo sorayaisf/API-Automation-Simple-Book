@@ -8,16 +8,16 @@ Ensure you have the following software installed:
 - npm (comes with Node.js)
 - Newman (Postman's command-line runner)
 
-``1. Clone the Repository``
+**1. Clone the Repository**
 
 First, clone this repository to your local machine:
 
-``bash
+```bash
 git clone <repository-url>
 cd <repository-directory>
-``
+```
 
-## 2. Install Dependencies
+**2. Install Dependencies**
 
 ```bash
 npm install
@@ -25,9 +25,9 @@ npm install
 
 This will install all necessary dependencies listed in package.json.
 
-## 3. Set Up Your Environment
+**3. Set Up Your Environment**
 
-Edit the environment file (soraya.env.json) or update the email in the script directly:
+Edit the environment file ``soraya.postman_environment.json`` or update the email in the script directly:
 
 - Replace the email field with your email address:
 
@@ -41,7 +41,7 @@ Edit the environment file (soraya.env.json) or update the email in the script di
 ]
 ```
 
-## 4. Run the Automation Script
+**4. Run the Automation Script**
 
 You can run the tests using the following command:
 
@@ -49,7 +49,7 @@ You can run the tests using the following command:
 npm filename.js
 ```
 
-## 5. View the Results
+**5. View the Results**
 
 The test results will be displayed in the terminal. Each test will show whether it passed or failed, along with any additional details.
 
