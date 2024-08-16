@@ -1,0 +1,477 @@
+{
+	"info": {
+		"_postman_id": "0d1b1f4f-37a7-406b-b483-be8425a85f84",
+		"name": "API Book Project",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "19814540",
+		"_collection_link": "https://api-team-5247.postman.co/workspace/API-Team-Workspace~ba5d2b96-19a8-4f58-a6c3-9ed0fe3ead7c/collection/19814540-0d1b1f4f-37a7-406b-b483-be8425a85f84?action=share&source=collection_link&creator=19814540"
+	},
+	"item": [
+		{
+			"name": "API Authentication",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 201\", function () {\r",
+							"pm.response.to.have.status(201);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response time is less than 1000ms\", function () {\r",
+							"    pm.expect(pm.response.responseTime).to.be.below(1000)\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Verify access token is not null\", function () {\r",
+							"    pm.expect(pm.response.json().accessToken).not.equal(null);\r",
+							"});\r",
+							"\r",
+							"\r",
+							"// Ambil accessToken dari respons\r",
+							"const accessToken = pm.response.json().accessToken;\r",
+							"\r",
+							"// Simpan accessToken ke environment \r",
+							"pm.environment.set(\"accessToken\", accessToken);\r",
+							"\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n   \"clientName\": \"{{name}}\",\r\n   \"clientEmail\": \"{{email}}\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/api-clients/",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"api-clients",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Status",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response time is less than 500ms\", function () {\r",
+							"pm.expect(pm.response.responseTime).to.be.below(500)\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response message status is OK\", function () {\r",
+							"    pm.expect(pm.response.status).to.eql(\"OK\");\r",
+							"});\r",
+							"\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/status",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"status"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Single Book",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response time is less than 500ms\", function () {\r",
+							"pm.expect(pm.response.responseTime).to.be.below(500)\r",
+							"});\r",
+							"\r",
+							"// Ambil respons JSON dari API\r",
+							"pm.test(\"Verify all values in the response message are correct\", function () {\r",
+							"    const jsonData = pm.response.json();\r",
+							"\r",
+							"\r",
+							"    // Simpan itemBookId ke environment\r",
+							"    const itemBookId = pm.response.json().id;\r",
+							"    pm.environment.set(\"itemBookId\", itemBookId);\r",
+							"    const responseJson = pm.response.json();\r",
+							"    pm.environment.set(\"itemBookId\", responseJson.id);\r",
+							"\r",
+							"     // Validasi ID\r",
+							"    pm.test(\"ID = \" + jsonData.id, function () {\r",
+							"    pm.expect(jsonData.id).to.eql(parseInt(pm.environment.get(\"itemBookId\")));\r",
+							"    });\r",
+							"\r",
+							"    // Validasi name\r",
+							"    pm.test(\"Name = \" + jsonData.name, function () {\r",
+							"    pm.expect(jsonData.name).to.be.a(\"string\");\r",
+							"    });\r",
+							"\r",
+							"    // Validasi author\r",
+							"    pm.test(\"Author = \" + + jsonData.author, function () {\r",
+							"    pm.expect(jsonData.author).to.be.a(\"string\");\r",
+							"    });\r",
+							"\r",
+							"    // Validasi ISBN\r",
+							"    pm.test(\"ISBN = \" + jsonData.isbn, function () {\r",
+							"    pm.expect(jsonData.isbn).to.be.a(\"string\");\r",
+							"    });\r",
+							"\r",
+							"    // Validasi Type\r",
+							"    pm.test(\"Type = \" + jsonData.type, function () {\r",
+							"    pm.expect(jsonData.type).to.be.a(\"string\");\r",
+							"    });\r",
+							"\r",
+							"    //Validasi Price\r",
+							"    pm.test(\"Price = \" + jsonData.price, function () {\r",
+							"    pm.expect(jsonData.price).to.be.a(\"number\");\r",
+							"    });\r",
+							"\r",
+							"     //Validasi Current Stock\r",
+							"    pm.test(\"Current Stock = \" + jsonData[\"current-stock\"], function () {\r",
+							"    pm.expect(jsonData[\"current-stock\"]).to.be.a(\"number\");\r",
+							"    });\r",
+							"\r",
+							"     //Validasi Available\r",
+							"    pm.test(\"Available = \" + jsonData.available, function () {\r",
+							"    pm.expect(jsonData.available).to.be.a (\"boolean\");\r",
+							"    });\r",
+							"\r",
+							"});\r",
+							"\r",
+							"\r",
+							"\r",
+							"\r",
+							"\r",
+							"\r",
+							"\r",
+							"\r",
+							"\r",
+							"\r",
+							"\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/books/:itemBookId",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"books",
+						":itemBookId"
+					],
+					"variable": [
+						{
+							"key": "itemBookId",
+							"value": "1"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Submit Order",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 201\", function () {\r",
+							"pm.response.to.have.status(201);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response time is less than 1000ms\", function () {\r",
+							"pm.expect(pm.response.responseTime).to.be.below(1000)\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Verify the 'created' value in the response message is true\", function () {\r",
+							"    const responseJson = pm.response.json();\r",
+							"    pm.expect(responseJson.created).to.be.true;\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Verify the 'orderId' value in the response message is not null\", function () {\r",
+							"    const responseJson = pm.response.json();\r",
+							"    pm.expect(responseJson.orderId).to.not.be.null;\r",
+							"});\r",
+							"\r",
+							"\r",
+							"// Simpan orderId ke environment\r",
+							"const orderId = pm.response.json().orderId;\r",
+							"pm.environment.set(\"orderId\", orderId);\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{accessToken}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"bookId\": 1,\r\n  \"customerName\": \"Natalie\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/orders",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"orders"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Single Order",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"// pm.test(\"Status code is 200\", function () {\r",
+							"// pm.response.to.have.status(200);\r",
+							"// });\r",
+							"\r",
+							"// pm.test(\"Response time is less than 1000ms\", function () {\r",
+							"// pm.expect(pm.response.responseTime).to.be.below(1000)\r",
+							"// });\r",
+							"\r",
+							"// Ambil respons JSON dari API\r",
+							"// pm.test(\"Verify all values in the response message are correct\", function () {\r",
+							"//      const jsonBody = pm.response.json();\r",
+							"\r",
+							"//     const expectedOrderId = pm.environment.get(\"nnn\");\r",
+							"//     const expectedBookId = pm.environment.get(1);\r",
+							"//     const customerName = pm.environment.get(\"Nana\");\r",
+							"\r",
+							"   \r",
+							"//      // Validasi ID\r",
+							"//     pm.test(\"ID = \" + jsonBody.id, function () {\r",
+							"//     pm.expect(jsonBody.id).to.eql(expectedOrderId);\r",
+							"//     });\r",
+							"\r",
+							"//     // Validasi bookId\r",
+							"//     pm.test(\"bookId = \" + jsonBody.bookId, function () {\r",
+							"//     pm.expect(jsonBody.bookId).to.eql(expectedBookId);\r",
+							"//     });\r",
+							"\r",
+							"//     // Validasi customer name\r",
+							"//      pm.test(\"Customer Name = \" + jsonBody.customerName, function () {\r",
+							"//         pm.expect(jsonBody.customerName).to.be.a(\"customerName\");\r",
+							"//     });\r",
+							"\r",
+							"// });\r",
+							"\r",
+							"\r",
+							"\r",
+							"\r",
+							"// Ambil respons JSON dari API\r",
+							"pm.test(\"Verify all values in the response message are correct\", function () {\r",
+							"     const jsonData = pm.response.json();\r",
+							"\r",
+							"//  Validasi customer name\r",
+							"     pm.test(\"Customer Name = \" + jsonData.id, function () {\r",
+							"        pm.expect(jsonData.id).to.be.a(\"number\");\r",
+							"    });\r",
+							"\r",
+							"\r",
+							"\r",
+							"});\r",
+							"\r",
+							"\r",
+							"\r",
+							"\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{accessToken}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/orders",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"orders"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete Order",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 204\", function () {\r",
+							"pm.response.to.have.status(204);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response time is less than 1000ms\", function () {\r",
+							"pm.expect(pm.response.responseTime).to.be.below(1000)\r",
+							"});\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{accessToken}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/orders/:orderId",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"orders",
+						":orderId"
+					],
+					"variable": [
+						{
+							"key": "orderId",
+							"value": "{{orderId}}"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"variable": [
+		{
+			"key": "token",
+			"value": ""
+		},
+		{
+			"key": "orderIdd",
+			"value": ""
+		}
+	]
+}
