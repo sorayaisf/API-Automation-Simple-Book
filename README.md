@@ -54,7 +54,7 @@ npm filename.js
 The test results will be displayed in the terminal. Each test will show whether it passed or failed, along with any additional details.
 
 ## Structure
-- filename.js: Contains the main script that runs the automated tests.
+- soraya-api.js: Contains the main script that runs the automated tests.
 - soraya.postman_collection.json: Contains the Postman collection with all the API tests.
 - soraya.postman_environment.json: Contains the environment variables required for the tests.
 
